@@ -1,61 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Knott - Full-Stack Wedding Planning Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Knott is a comprehensive wedding planning application built with Laravel for the backend and React for the frontend. It helps couples manage various aspects of their wedding, including vendor management, budget tracking, guest lists, gift wells, and more.
 
-## About Laravel
+## Technologies Used
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Backend
+- **Laravel**: A powerful PHP framework for building robust web applications.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Frontend
+- **React**: A JavaScript library for building user interfaces.
+- **Vite**: A fast frontend build tool.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
+- **React Leaflet**: React components for Leaflet maps.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- **Vendor Management**: Discover and manage wedding vendors.
+- **Quote Requests**: Request and compare quotes from multiple vendors.
+- **Budget Tracking**: Keep track of wedding expenses and categories.
+- **Guest List Management**: Manage wedding guests and RSVPs.
+- **Wedding To-Do List**: Organize tasks and milestones.
+- **Gift Well**: Allow guests to contribute to a gift fund.
+- **AI Vendor Matching**: (Potentially) Intelligent matching of vendors to couple's needs.
+- **Competitions**: Engage users with wedding-related competitions.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Setup Instructions
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+To get the project up and running on your local machine, follow these steps:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the Repository
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/Mhlave2402/knott.git
+cd knott
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Backend Setup (Laravel)
 
-### Premium Partners
+1.  **Install Composer Dependencies**:
+    ```bash
+    composer install
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2.  **Copy Environment File**:
+    ```bash
+    cp .env.example .env
+    ```
+
+3.  **Generate Application Key**:
+    ```bash
+    php artisan key:generate
+    ```
+
+4.  **Create SQLite Database (if using SQLite)**:
+    ```bash
+    touch database/database.sqlite
+    ```
+    Ensure your `.env` file is configured to use `sqlite` for `DB_CONNECTION`.
+
+5.  **Run Migrations and Seeders**:
+    ```bash
+    php artisan migrate --seed
+    ```
+
+6.  **Start Laravel Development Server**:
+    ```bash
+    php artisan serve
+    ```
+
+### 3. Frontend Setup (React)
+
+1.  **Install Node.js Dependencies**:
+    ```bash
+    npm install --force
+    ```
+    (The `--force` flag is used to bypass peer dependency conflicts, which may occur with `react-leaflet` and React 18. This might lead to unexpected behavior, but it's a common first step to get the dependencies installed.)
+
+2.  **Start Vite Development Server**:
+    ```bash
+    npm run dev
+    ```
+
+### 4. Access the Application
+
+-   **Backend API**: The Laravel backend will be accessible at `http://127.0.0.1:8000` (or whatever `php artisan serve` outputs).
+-   **Frontend Application**: The React frontend will be accessible at `http://localhost:5173` (or whatever `npm run dev` outputs).
+
+You should now be able to access the Knott application in your browser.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome! Please feel free to fork the repository, make your changes, and submit a pull request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Knott application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
