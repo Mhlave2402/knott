@@ -1,0 +1,74 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Models\VendorProfile;
+use Illuminate\Http\Request;
+
+class PublicVendorController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = VendorProfile::query()
+            ->approved()
+            ->with(['services', 'featuredPortfolio', 'subscription']);
+
+        // Search filters
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('business_name', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('location')) {
+            $query->where('location', 'LIKE', "%{$request->get('location')}%");
+        }
+
+        if ($request->filled('category')) {
+            $query->whereHas('services', function ($q) use ($request) {
+                $q->where('category', $request->get('category'));
+            });
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('starting_price', '<=', $request->get('max_price'));
+        }
+
+        // Sort featured vendors first
+        $query->orderByDesc('is_featured')
+              ->orderBy('business_name');
+
+        $vendors = $query->paginate(12);
+
+        $categories = [
+            'photography' => 'Photography',
+            'videography' => 'Videography', 
+            'catering' => 'Catering',
+            'venue' => 'Venue',
+            'decoration' => 'Decoration & Styling',
+            'music' => 'Music & DJ',
+            'flowers' => 'Flowers & Bouquets',
+            'cake' => 'Wedding Cake',
+            'transport' => 'Transport',
+            'makeup' => 'Makeup',
+            'hair' => 'Hair Styling',
+            'other' => 'Other Services'
+        ];
+
+        return view('vendors.index', compact('vendors', 'categories'));
+    }
+
+    public function show(VendorProfile $vendor)
+    {
+        if (!$vendor->is_approved) {
+            abort(404);
+        }
+
+        $vendor->load(['services' => function ($query) {
+            $query->where('is_active', true);
+        }, 'portfolio', 'user']);
+
+        return view('vendors.show', compact('vendor'));
+    }
+}

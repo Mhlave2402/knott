@@ -1,0 +1,1 @@
+{{-- Couple Quote Comparison View --}}

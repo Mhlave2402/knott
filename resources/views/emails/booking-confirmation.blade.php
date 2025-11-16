@@ -1,0 +1,1 @@
+{{-- Booking Confirmation Email Template --}}

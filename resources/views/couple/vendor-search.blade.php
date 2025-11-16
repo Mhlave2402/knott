@@ -1,0 +1,1 @@
+{{-- Couple Vendor Search View --}}

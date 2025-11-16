@@ -1,0 +1,48 @@
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
+
+class VendorSubscription extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'vendor_profile_id', 'plan', 'amount', 'starts_at',
+        'expires_at', 'is_active', 'payment_reference'
+    ];
+
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'starts_at' => 'date',
+        'expires_at' => 'date',
+        'is_active' => 'boolean'
+    ];
+
+    public function vendorProfile(): BelongsTo
+    {
+        return $this->belongsTo(VendorProfile::class);
+    }
+
+    public function getIsExpiredAttribute(): bool
+    {
+        return $this->expires_at->isPast();
+    }
+
+    public function getDaysRemainingAttribute(): int
+    {
+        return $this->expires_at->diffInDays(Carbon::now(), false);
+    }
+
+    public static function getPlanPricing(): array
+    {
+        return [
+            'basic' => ['price' => 29.00, 'features' => ['Basic listing', 'Up to 5 services', '10 portfolio images']],
+            'premium' => ['price' => 79.00, 'features' => ['Featured listing', 'Unlimited services', '50 portfolio items', 'Priority support']],
+            'pro' => ['price' => 149.00, 'features' => ['Top placement', 'Unlimited everything', 'Analytics', 'Lead priority', '24/7 support']]
+        ];
+    }
+}
